@@ -1,0 +1,38 @@
+{
+    "source": [
+        "tokens/**/*.json"
+    ],
+    "platforms": {
+        "android": {
+            "transformGroup": "android",
+            "buildPath": "build/android/",
+            "files": [
+                {
+                    "destination": "font_dimens.xml",
+                    "format": "android/fontDimens"
+                },
+                {
+                    "destination": "colors.xml",
+                    "format": "android/colors"
+                }
+            ]
+        },
+        "ios": {
+            "transformGroup": "ios",
+            "buildPath": "build/ios/",
+            "files": [
+                {
+                    "destination": "StyleDictionaryColor.h",
+                    "format": "ios/colors.h",
+                    "className": "StyleDictionaryColor",
+                    "type": "StyleDictionaryColorName",
+                    "filter": {
+                        "attributes": {
+                            "category": "color"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
