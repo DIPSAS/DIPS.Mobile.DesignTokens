@@ -5,7 +5,7 @@
     "platforms": {
         "android": {
             "transformGroup": "android",
-            "buildPath": "build/android/",
+            "buildPath": "../output/android/",
             "files": [
                 {
                     "destination": "font_dimens.xml",
@@ -19,7 +19,7 @@
         },
         "ios": {
             "transformGroup": "ios",
-            "buildPath": "build/ios/",
+            "buildPath": "../output/ios/",
             "files": [
                 {
                     "destination": "StyleDictionaryColor.h",
