@@ -1,0 +1,110 @@
+{
+  "color": {
+    "primary": {
+      "light": {
+        "primary-100": {
+          "description": "",
+          "type": "color",
+          "value": "#047f89ff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:9780c0fe4b43bb6ed2e044523841181b142a96b4,",
+              "exportKey": "color"
+            }
+          }
+        },
+        "primary-90": {
+          "description": "",
+          "type": "color",
+          "value": "#65868fff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:506d975577ad4bda58e3374c0a61b4c03410889f,",
+              "exportKey": "color"
+            }
+          }
+        },
+        "primary 80": {
+          "description": "",
+          "type": "color",
+          "value": "#98b2aeff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:ee5a989fe14c1b19fcd2b8d99bada698ec53a2fc,",
+              "exportKey": "color"
+            }
+          }
+        }
+      }
+    },
+    "secondary": {
+      "light": {
+        "secondary-100": {
+          "description": "",
+          "type": "color",
+          "value": "#97c8cdff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:0842c7f8f10413263f928ce2e5f14427108b2c4d,",
+              "exportKey": "color"
+            }
+          }
+        },
+        "secondary-70": {
+          "description": "",
+          "type": "color",
+          "value": "#ecf3f4ff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:bba6a2cfd387e80217c2e47fba49855f4b838428,",
+              "exportKey": "color"
+            }
+          }
+        },
+        "secondary-80": {
+          "description": "",
+          "type": "color",
+          "value": "#dadadaff",
+          "blendMode": "normal",
+          "extensions": {
+            "org.lukasoppermann.figmaDesignTokens": {
+              "styleId": "S:f121f077bc62303cf29ff5c271bb72664b2a3c96,",
+              "exportKey": "color"
+            }
+          }
+        }
+      }
+    },
+    "system": {
+      "black": {
+        "description": "",
+        "type": "color",
+        "value": "#000000ff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:fc87050dcda2f99ae60b9a28de6368834ef2563e,",
+            "exportKey": "color"
+          }
+        }
+      },
+      "white": {
+        "description": "",
+        "type": "color",
+        "value": "#ffffffff",
+        "blendMode": "normal",
+        "extensions": {
+          "org.lukasoppermann.figmaDesignTokens": {
+            "styleId": "S:da67faaf01633b5f8711b0b49067f7c5216be42e,",
+            "exportKey": "color"
+          }
+        }
+      }
+    }
+  }
+}

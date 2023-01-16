@@ -1,40 +1,35 @@
 #r "nuget:Newtonsoft.Json, 13.0.2"
+#load "Command.csx"
 using Newtonsoft.Json;
 using System.Xml;
 
 public static class StyleDictionary
 {
+    public static Task Build(string rootPath)
+    {
+        return Command.ExecuteAsync("style-dictionary", "build", rootPath);
+    }
     /// <summary>
     /// Get the config file from style dictionary root folder
     /// </summary>
-    /// <param name="filePath">The filepath to style dictionary root folder with the config.json file</param>
+    /// <param name="rootPath">The filepath to style dictionary root folder with the config.json file</param>
     /// <returns></returns>
-    public static async Task<Config> GetConfig(string filePath){
-        var json = await System.IO.File.ReadAllTextAsync(Path.Combine(filePath, "config.json"));
+    public static async Task<Config> GetConfig(string rootPath){
+        var json = await System.IO.File.ReadAllTextAsync(Path.Combine(rootPath, "config.json"));
         return JsonConvert.DeserializeObject<Config>(json);
     }
 
     /// <summary>
     /// Get Android Colors
     /// </summary>
-    /// <param name="filePath">The filepath to style dictionary root folder with the config.json file</param>
-    public static async Task<Dictionary<string, string>> GetAndroidColors(string filePath){
-        var config = await GetConfig(filePath);
+    /// <param name="rootPath">The filepath to style dictionary root folder with the config.json file</param>
+    public static async Task<Dictionary<string, string>> GetAndroidColors(string rootPath){
+        var config = await GetConfig(rootPath);
         var buildPath = config.Platforms.Android.BuildPath;
-        var actualBuildPath = Path.Combine(filePath, buildPath);
+        var actualBuildPath = Path.Combine(rootPath, buildPath);
         var file = config.Platforms.Android.Files.FirstOrDefault(f => f.Format.Equals("android/colors"));
         var androidResourceFile = actualBuildPath + file.Destination;
         var androidColorsRawXml = await System.IO.File.ReadAllTextAsync(androidResourceFile);
-
-        // var start = 0;
-        // var end = 0;
-
-        // while ((start = xmlString.IndexOf("-->", start)) != -1){
-        //     end = xmlString.IndexOf("-->", start);
-        //     if (end == -1)
-        //         break; 
-        //     xmlString = xmlString.Substring(0, start) + xmlString.Substring(end + 3);
-        // }
 
         var colorXml = new XmlDocument();
         colorXml.LoadXml(androidColorsRawXml);

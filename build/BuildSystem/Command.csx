@@ -35,7 +35,11 @@ public static class Command
         }
         
         var process = CreateProcess(commandPath, arguments, workingDirectory);
-        RedirectToConsole(process);
+         if(verbose)
+        {
+            RedirectToConsole(process);
+        }
+        
         var exitCode = await StartProcessAsync(process, echo: true);
         if (exitCode != success)
         {
