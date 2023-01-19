@@ -54,7 +54,7 @@
             }
           }
         },
-        "secondary-70": {
+        "secondary-90": {
           "description": "",
           "type": "color",
           "value": "#ecf3f4ff",
@@ -69,7 +69,7 @@
         "secondary-80": {
           "description": "",
           "type": "color",
-          "value": "#dadadaff",
+          "value": "#f0f5f7ff",
           "blendMode": "normal",
           "extensions": {
             "org.lukasoppermann.figmaDesignTokens": {

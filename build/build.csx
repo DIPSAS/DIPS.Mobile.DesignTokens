@@ -4,17 +4,28 @@
 #load "BuildSystem/Dump.csx"
 #load "BuildSystem/MobileFramework.csx"
 
-
 private static string rootDir => Repository.RootDir();
 private static string srcDir => Path.Combine(Repository.RootDir(),"src");
 private static string outputDir => Path.Combine(Repository.RootDir(),"output");
 
-Console.WriteLine("🎨 Generating Android and iOS resources");
-//Generate native Android and iOS resources
-await StyleDictionary.Build(srcDir);
+AsyncStep mobile = async () =>
+{
+    Console.WriteLine("🎨 Generating Android and iOS resources");
+    //Generate native Android and iOS resources
+    await StyleDictionary.Build(srcDir);
 
-//Use Android resources to generate XAML Resources
-var colors = await StyleDictionary.GetAndroidColors(srcDir);
+    //Use Android resources to generate XAML Resources
+    var colors = await StyleDictionary.GetAndroidColors(srcDir);
 
-//Create mobile resources
-MobileFramework.CreateResources(colors, outputDir);
+    //Create mobile resources
+    MobileFramework.CreateResources(colors, outputDir);
+};
+var args = Args;
+if(args.Count() == 0){
+    await ExecuteSteps(new string[]{"help"});
+    WriteLine("Please select steps to run:");
+    var input = ReadLine();
+    args = input.Split(' ');
+}
+
+await ExecuteSteps(args);
