@@ -4,12 +4,41 @@
     ],
     "platforms": {
         "android": {
-            "transformGroup": "android",
+            "transforms": ["attribute/cti", "name/cti/kebab", "color/hex"],
             "buildPath": "../output/android/",
             "files": [
                 {
                     "destination": "colors.xml",
-                    "format": "android/colors"
+                    "format": "android/colors",
+                    "filter": {
+                        "attributes": {
+                            "category": "color"
+                        }
+                    }
+                },
+                {
+                    "destination": "size.json",
+                    "format": "json/flat",
+                    "filter": {
+                        "attributes": {
+                            "category": "size"
+                        }
+                    }
+                }
+            ]
+        },
+        "raw": {
+            "transforms": ["attribute/cti", "name/cti/kebab"],
+            "buildPath": "../output/raw/",
+            "files": [
+                {
+                    "destination": "size.json",
+                    "format": "json/flat",
+                    "filter": {
+                        "attributes": {
+                            "category": "size"
+                        }
+                    }
                 }
             ]
         }
