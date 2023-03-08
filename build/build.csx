@@ -8,7 +8,7 @@ private static string rootDir => Repository.RootDir();
 private static string srcDir => Path.Combine(Repository.RootDir(),"src");
 private static string outputDir => Path.Combine(Repository.RootDir(),"output");
 
-AsyncStep mobile = async () =>
+AsyncStep generate = async () =>
 {
     Console.WriteLine("🎨 Generating Android and iOS resources");
     //Generate native Android and iOS resources
