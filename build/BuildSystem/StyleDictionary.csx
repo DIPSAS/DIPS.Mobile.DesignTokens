@@ -1,6 +1,7 @@
 #r "nuget:Newtonsoft.Json, 13.0.2"
 #load "Command.csx"
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Xml;
 
 public static class StyleDictionary
@@ -72,6 +73,31 @@ public static class StyleDictionary
         }
         return colorDictionary;
     }
+
+    public static async Task<Dictionary<string,string>> GetSizes(string rootPath)
+    {
+        var sizes = new Dictionary<string,string> ();
+        var config = await GetConfig(rootPath);
+        var fileConfig = config.Platforms.Raw.Files.FirstOrDefault(f => f.Filter.Attributes.Category.Equals("size"));
+        if(fileConfig != null)
+        {
+            var buildPath = config.Platforms.Raw.BuildPath;
+            var actualBuildPath = Path.Combine(rootPath, buildPath);
+            var fileName = fileConfig.Destination;
+            var rawJson = await System.IO.File.ReadAllTextAsync(actualBuildPath + fileName);
+            var jObject = JObject.Parse(rawJson);
+
+            foreach (var property in jObject.Properties()) //Each size
+            {
+                sizes.Add(property.Name.ToString(), property.Value.ToString());
+            }
+
+        }else
+        {
+            WriteLine("No size defined in StyleDictionary config");
+        }
+        return sizes;
+    }
 }
 
 #region config objects
@@ -108,10 +134,18 @@ public static class StyleDictionary
         public List<File> Files { get; set; }
     }
 
+    public class Raw
+    {
+        public string TransformGroup { get; set; }
+        public string BuildPath { get; set; }
+        public List<File> Files { get; set; }
+    }
+
     public class Platforms
     {
         public Android Android { get; set; }
         public iOS iOS { get; set; }
+        public Raw Raw { get; set; }
     }
 
     public class Config

@@ -15,15 +15,6 @@
                             "category": "color"
                         }
                     }
-                },
-                {
-                    "destination": "size.json",
-                    "format": "json/flat",
-                    "filter": {
-                        "attributes": {
-                            "category": "size"
-                        }
-                    }
                 }
             ]
         },

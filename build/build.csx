@@ -17,8 +17,10 @@ AsyncStep generate = async () =>
     //Use Android resources to generate XAML Resources
     var colors = await StyleDictionary.GetAndroidColors(srcDir);
 
+    var sizes = await StyleDictionary.GetSizes(srcDir);
+
     //Create mobile resources
-    MobileFramework.CreateResources(colors, outputDir);
+    MobileFramework.CreateResources(colors, sizes, outputDir);
 };
 var args = Args;
 if(args.Count() == 0){
