@@ -4,17 +4,12 @@
     ],
     "platforms": {
         "android": {
-            "transforms": ["attribute/cti", "name/cti/kebab", "color/hex"],
+            "transformGroup": "android",
             "buildPath": "../output/android/",
             "files": [
                 {
                     "destination": "colors.xml",
-                    "format": "android/colors",
-                    "filter": {
-                        "attributes": {
-                            "category": "color"
-                        }
-                    }
+                    "format": "android/colors"
                 }
             ]
         },

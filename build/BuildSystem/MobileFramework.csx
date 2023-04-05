@@ -19,7 +19,7 @@ namespace DIPS.Mobile.UI.Resources.Colors
 {
     public enum ColorName
     {
-        "+string.Join(", \n", colors.Keys.Select(colorName => colorName)).Replace("-", "_")+@"
+        "+string.Join(", \n", colors.Keys.Select(colorName => colorName))+@"
     }
 }";
         
@@ -41,7 +41,7 @@ namespace DIPS.Mobile.UI.Sizes.Sizes
 {
     public enum SizeName
     {
-        "+string.Join(", \n", sizes.Keys.Select(colorName => colorName)).Replace("-", "_")+@"
+        "+string.Join(", \n", sizes.Keys.Select(colorName => colorName))+@"
     }
 }";
 

@@ -52,7 +52,7 @@ public static class StyleDictionary
                     {
                         if (attributes[0].Name == "name")
                         {
-                            colorName = attributes[0].Value;    
+                            colorName = attributes[0].Value.Replace("-", "_");    
                         }
                     }
                     
@@ -89,7 +89,7 @@ public static class StyleDictionary
 
             foreach (var property in jObject.Properties()) //Each size
             {
-                sizes.Add(property.Name.ToString(), property.Value.ToString());
+                sizes.Add(property.Name.ToString().Replace("-", "_"), property.Value.ToString());
             }
 
         }else
