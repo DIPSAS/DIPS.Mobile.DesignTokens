@@ -38,7 +38,7 @@ namespace DIPS.Mobile.UI.Resources.Colors
 
         WriteLine("Building enum csharp file");
         string sizesEnumCsharpContent = csharpComment+@"
-namespace DIPS.Mobile.UI.Sizes.Sizes
+namespace  DIPS.Mobile.UI.Resources.Sizes
 {
     public enum SizeName
     {
@@ -59,7 +59,7 @@ namespace DIPS.Mobile.UI.Sizes.Sizes
 
         WriteLine("Building enum csharp file");
         string iconsEnumCsharpContent = csharpComment+@"
-namespace DIPS.Mobile.UI.Icons.Icons
+namespace  DIPS.Mobile.UI.Resources.Icons
 {
     public enum IconName
     {
