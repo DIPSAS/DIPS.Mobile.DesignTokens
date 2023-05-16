@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 
 public static class MobileFramework
 {
-    public static void CreateResources(Dictionary<string,string> colors,Dictionary<string,string> sizes, string outputDir)
+    public static void CreateResources(Dictionary<string,string> colors,Dictionary<string,string> sizes, Dictionary<string, string> icons, string outputDir)
     {
+        //Colors
         WriteLine("Colors");
-        WriteLine("Building XAML file");
         var comment = $"\nDo not edit directly,\ngenerated {DateTime.Now} from DIPS.Mobile.DesignTokens\n";
         var colorsResourceDictionaryRaw = BuildResourceDictionary("DIPS.Mobile.UI.Resources.Colors.Colors", colors, "Color", comment);
 
@@ -23,9 +23,10 @@ namespace DIPS.Mobile.UI.Resources.Colors
     }
 }";
         
-        var xamarinFormsOutputDir = Directory.CreateDirectory(Path.Combine(outputDir, "xamarin", "forms"));
-        var colorsOutputDir = Directory.CreateDirectory(Path.Combine(xamarinFormsOutputDir.FullName, "Colors"));
-        var sizesOutputDir = Directory.CreateDirectory(Path.Combine(xamarinFormsOutputDir.FullName, "Sizes"));
+        var mauiOutputDir = Directory.CreateDirectory(Path.Combine(outputDir, "dotnet", "maui"));
+        var colorsOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Colors"));
+        var sizesOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Sizes"));
+        var iconsOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Icons"));
 
         //Write colors to XAML file and write enum file
         var colorsResourceDictionaryFullPath = Path.Combine(colorsOutputDir.FullName, "Colors.xaml");
@@ -35,7 +36,7 @@ namespace DIPS.Mobile.UI.Resources.Colors
         WriteLine($"XAML output file: {colorsResourceDictionaryFullPath}");
         WriteLine($"C# Enum file: {colorsEnumFilePath}");
 
-         WriteLine("Building enum csharp file");
+        WriteLine("Building enum csharp file");
         string sizesEnumCsharpContent = csharpComment+@"
 namespace DIPS.Mobile.UI.Sizes.Sizes
 {
@@ -44,11 +45,9 @@ namespace DIPS.Mobile.UI.Sizes.Sizes
         "+string.Join(", \n", sizes.Keys.Select(colorName => colorName))+@"
     }
 }";
-
         //Sizes
         WriteLine("Building Sizes");
-        var extraNamespaces = new Dictionary<string, string>(){{"xmlns:sys","clr-namespace:System;assembly=System.Runtime"}};
-        var sizesResourceDictionaryRaw = BuildResourceDictionary("DIPS.Mobile.UI.Resources.Sizes.Sizes", sizes, "Int32", comment, extraNamespaces);
+        var sizesResourceDictionaryRaw = BuildResourceDictionary("DIPS.Mobile.UI.Resources.Sizes.Sizes", sizes, "Int32", comment, new Dictionary<string, string>(){{"xmlns:sys","clr-namespace:System;assembly=System.Runtime"}});
         sizesResourceDictionaryRaw = sizesResourceDictionaryRaw.Replace("Int32", "sys:Int32");
 
         var sizesResourceDictionaryFullPath = Path.Combine(sizesOutputDir.FullName, "Sizes.xaml");
@@ -57,6 +56,29 @@ namespace DIPS.Mobile.UI.Sizes.Sizes
         System.IO.File.WriteAllText(sizesEnumFilePath, sizesEnumCsharpContent);
         WriteLine($"XAML output file: {sizesResourceDictionaryFullPath}");
         WriteLine($"C# Enum file: {sizesEnumFilePath}");
+
+        WriteLine("Building enum csharp file");
+        string iconsEnumCsharpContent = csharpComment+@"
+namespace DIPS.Mobile.UI.Icons.Icons
+{
+    public enum IconName
+    {
+        "+string.Join(", \n", icons.Keys.Select(iconName => iconName))+@"
+    }
+}";
+
+         //Icons
+        WriteLine("Building Icons");
+        var iconsResourceDictionaryRaw = BuildResourceDictionary("DIPS.Mobile.UI.Resources.Icons.Icons", icons, "String", comment, new Dictionary<string, string>(){{"xmlns:x","http://schemas.microsoft.com/winfx/2009/xaml"}});
+        iconsResourceDictionaryRaw = iconsResourceDictionaryRaw.Replace("String", "x:String");
+
+        var iconsResourceDictionaryFullPath = Path.Combine(iconsOutputDir.FullName, "Icons.xaml");
+        var iconsEnumFilePath = Path.Combine(iconsOutputDir.FullName, "IconName.cs");
+        System.IO.File.WriteAllText(iconsResourceDictionaryFullPath, iconsResourceDictionaryRaw);
+        System.IO.File.WriteAllText(iconsEnumFilePath, iconsEnumCsharpContent);
+        WriteLine($"XAML output file: {iconsResourceDictionaryFullPath}");
+        WriteLine($"C# Enum file: {iconsEnumFilePath}");
+        
     }
 
     private static string BuildResourceDictionary(string className, Dictionary<string,string> resources, string resourceType, string comment, Dictionary<string,string> extraNamespaces = null)
