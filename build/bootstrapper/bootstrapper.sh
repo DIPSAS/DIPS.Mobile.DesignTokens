@@ -15,4 +15,5 @@ if npm list -g | grep style-dictionary > /dev/null ; then
    echo "✅ npm package: style-dictionary was found"
 else
    npm install style-dictionary
+   npm list -g  
 fi
