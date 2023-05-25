@@ -10,7 +10,11 @@ private static string outputDir => Path.Combine(Repository.RootDir(),"output");
 
 AsyncStep generate = async () =>
 {
-    Directory.Delete(outputDir, true);
+    if(Directory.Exists(outputDir))
+    {
+        Directory.Delete(outputDir, true);
+    }
+    
     Directory.CreateDirectory(outputDir);
 
     Console.WriteLine("🎨 Generating Android and iOS resources");
@@ -55,7 +59,7 @@ AsyncStep createPR = async () =>
     {
         WriteLine($"Trying to create {prBranchName} in {repoDir}");
         await Command.ExecuteAsync("git", $"checkout -b {prBranchName}", repoDir);
-    }catch(Exception e) //If you have already created the branch, this will throw and you can simply checkout the branch
+    }catch(Exception) //If you have already created the branch, this will throw and you can simply checkout the branch
     {
         WriteLine($"Branch was found from before, checking out {prBranchName} in {repoDir}");
         await Command.ExecuteAsync("git", $"checkout {prBranchName}", repoDir);   
@@ -115,12 +119,6 @@ if(args.Count() == 0){
 }
 
 await ExecuteSteps(args);
-
-public static void CreateSizes(int multiplier)
-{
-    var prefix = "size";
-    var max = 25;
-}
 
 public static void MoveIcons()
 {
