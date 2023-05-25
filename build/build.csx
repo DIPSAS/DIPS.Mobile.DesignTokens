@@ -21,7 +21,7 @@ AsyncStep generate = async () =>
     //Generate native Android and iOS resources
     await StyleDictionary.Build(srcDir);
 
-    //Use Android resources to generate XAML Resources
+    // Use Android resources to generate XAML Resources
     var colors = await StyleDictionary.GetAndroidColors(srcDir);
 
     // CreateSizes(); TODO: Generate sizes from a multiplier
@@ -110,7 +110,6 @@ AsyncStep createPR = async () =>
 };
 
 var args = Args;
-// args = new List<string>() { "createPR" };
 if(args.Count() == 0){
     await ExecuteSteps(new string[]{"help"});
     WriteLine("Please select steps to run:");
