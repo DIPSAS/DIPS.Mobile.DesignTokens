@@ -6,9 +6,10 @@ using System.Xml;
 
 public static class StyleDictionary
 {
-    public static Task Build(string rootPath)
+    public static Task Build(string configPath)
     {
-        return Command.ExecuteAsync("style-dictionary", "build", rootPath);
+    
+        return Command.ExecuteAsync($"npx", $"style-dictionary build", configPath);
     }
     /// <summary>
     /// Get the config file from style dictionary root folder

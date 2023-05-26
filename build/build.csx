@@ -10,14 +10,18 @@ private static string outputDir => Path.Combine(Repository.RootDir(),"output");
 
 AsyncStep generate = async () =>
 {
-    Directory.Delete(outputDir, true);
+    if(Directory.Exists(outputDir))
+    {
+        Directory.Delete(outputDir, true);
+    }
+    
     Directory.CreateDirectory(outputDir);
 
     Console.WriteLine("🎨 Generating Android and iOS resources");
     //Generate native Android and iOS resources
     await StyleDictionary.Build(srcDir);
 
-    //Use Android resources to generate XAML Resources
+    // Use Android resources to generate XAML Resources
     var colors = await StyleDictionary.GetAndroidColors(srcDir);
 
     // CreateSizes(); TODO: Generate sizes from a multiplier
@@ -31,6 +35,80 @@ AsyncStep generate = async () =>
     //Move icons to output folder
     MoveIcons();
 };
+
+
+AsyncStep createPR = async () =>
+{
+    var organization = "DIPSAS";
+    var repoName = "DIPS.Mobile.UI";
+    var repoDir = Path.Combine(outputDir, repoName);
+    var prBranchName = "designTokens-update";
+
+    //Clone repo if it does not exist in the output folder
+    if(!Directory.Exists(repoDir))
+    {
+        WriteLine($"Cloning {repoName} to {repoDir}");
+        await Command.ExecuteAsync("git", $"clone https://github.com/{organization}/{repoName}", outputDir);
+    }
+
+    
+    if(!Directory.Exists(repoDir)) throw new Exception($"Something went wrong when cloning. Repo is not located at {repoDir}");
+
+    //checkout new branch
+    try
+    {
+        WriteLine($"Trying to create {prBranchName} in {repoDir}");
+        await Command.ExecuteAsync("git", $"checkout -b {prBranchName}", repoDir);
+    }catch(Exception) //If you have already created the branch, this will throw and you can simply checkout the branch
+    {
+        WriteLine($"Branch was found from before, checking out {prBranchName} in {repoDir}");
+        await Command.ExecuteAsync("git", $"checkout {prBranchName}", repoDir);   
+    }
+    
+
+    //Where is everything located
+
+    //Generated resources
+    var generatedAndroidDir = new DirectoryInfo(Path.Combine(outputDir, "android"));
+    var generatedDotnetMauiDir = new DirectoryInfo(Path.Combine(outputDir, "dotnet", "maui"));
+
+    var generatedAndroidColorFile = generatedAndroidDir.GetFiles().FirstOrDefault(f => f.Name.Equals("colors.xml"));
+    var generatedDotnetMauiColorsDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Colors"));
+    var generatedDotnetMauiIconsDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Icons"));
+    var generatedDotnetMauiSizesDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Sizes"));
+
+    //The source repository paths
+    var libraryPath = Path.Combine(repoDir, "src", "library", "DIPS.Mobile.UI");
+    var libraryResourcesDir = new DirectoryInfo(Path.Combine(libraryPath, "Resources"));
+    var libraryAndroidDir = new DirectoryInfo(Path.Combine(libraryPath, "Platforms", "Android"));
+
+    var libraryDotnetMauiColorsDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Colors"));
+    var libraryDotnetMauiIconsDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Icons"));
+    var libraryDotnetMauiSizesDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Sizes"));
+
+
+    //Copy to the correct folders in the branch
+    generatedAndroidColorFile.CopyTo(Path.Combine(libraryAndroidDir.FullName, "Resources", "values", generatedAndroidColorFile.Name), true);
+    CopyDirectory(generatedDotnetMauiColorsDir.FullName, libraryDotnetMauiColorsDir.FullName, true, true);
+    CopyDirectory(generatedDotnetMauiIconsDir.FullName, libraryDotnetMauiIconsDir.FullName, true, true);
+    CopyDirectory(generatedDotnetMauiSizesDir.FullName, libraryDotnetMauiSizesDir.FullName, true, true);
+
+    //Commit changes
+    WriteLine($"Resources moved to folders, commiting changes");
+    await Command.ExecuteAsync("git", "add .", repoDir);
+    //Have to use a file due to bug with dotnet script in line commit message
+    var commitMessageFile = new FileInfo(Path.Combine(outputDir, "commitmessage.txt"));
+    System.IO.File.Create(commitMessageFile.FullName).Close();
+    using (StreamWriter outputFile = new StreamWriter(commitMessageFile.FullName, true))
+    {
+        outputFile.WriteLine("Resources update from DIPS.Mobile.DesignTokens");
+    }
+    await Command.ExecuteAsync("git", $"commit -F {commitMessageFile.FullName}", repoDir);
+
+    WriteLine($"Pushing {prBranchName} to repository");
+    await Command.ExecuteAsync("git", $"push origin {prBranchName}", repoDir);
+};
+
 var args = Args;
 if(args.Count() == 0){
     await ExecuteSteps(new string[]{"help"});
@@ -41,12 +119,6 @@ if(args.Count() == 0){
 
 await ExecuteSteps(args);
 
-public static void CreateSizes(int multiplier)
-{
-    var prefix = "size";
-    var max = 25;
-}
-
 public static void MoveIcons()
 {
     var resourceIconsDir = Path.Combine(outputDir, "dotnet", "maui", "Icons");
@@ -55,7 +127,7 @@ public static void MoveIcons()
         Directory.CreateDirectory(resourceIconsDir);
     }
 
-    CopyDirectory(Path.Combine(srcDir, "tokens", "icons"), resourceIconsDir, false);
+    CopyDirectory(Path.Combine(srcDir, "tokens", "icons"), resourceIconsDir, true, true);
 
 }
 
@@ -80,7 +152,7 @@ public static Dictionary<string, string> GetIcons()
     return iconNames;
 }
 
-static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+static void CopyDirectory(string sourceDir, string destinationDir, bool recursive=false, bool overwriteFiles=false)
 {
     // Get information about the source directory
     var dir = new DirectoryInfo(sourceDir);
@@ -99,7 +171,7 @@ static void CopyDirectory(string sourceDir, string destinationDir, bool recursiv
     foreach (FileInfo file in dir.GetFiles())
     {
         string targetFilePath = Path.Combine(destinationDir, file.Name);
-        file.CopyTo(targetFilePath);
+        file.CopyTo(targetFilePath, true);
     }
 
     // If recursive and copying subdirectories, recursively call this method

@@ -1,3 +1,6 @@
 src/build/
 .DS_Store
 output
+node_modules
+package.json
+package-lock.json
