@@ -77,6 +77,81 @@
       },
       "25": {
         "value": "100"
+      },
+      "1_negative": {
+        "value": "-4"
+      },
+      "2_negative": {
+        "value": "-8"
+      },
+      "3_negative": {
+        "value": "-12"
+      },
+      "4_negative": {
+        "value": "-16"
+      },
+      "5_negative": {
+        "value": "-20"
+      },
+      "6_negative": {
+        "value": "-24"
+      },
+      "7_negative": {
+        "value": "-28"
+      },
+      "8_negative": {
+        "value": "-32"
+      },
+      "9_negative": {
+        "value": "-36"
+      },
+      "10_negative": {
+        "value": "-40"
+      },
+      "11_negative": {
+        "value": "-44"
+      },
+      "12_negative": {
+        "value": "-48"
+      },
+      "13_negative": {
+        "value": "-52"
+      },
+      "14_negative": {
+        "value": "-56"
+      },
+      "15_negative": {
+        "value": "-60"
+      },
+      "16_negative": {
+        "value": "-64"
+      },
+      "17_negative": {
+        "value": "-68"
+      },
+      "18_negative": {
+        "value": "-72"
+      },
+      "19_negative": {
+        "value": "-76"
+      },
+      "20_negative": {
+        "value": "-80"
+      },
+      "21_negative": {
+        "value": "-84"
+      },
+      "22_negative": {
+        "value": "-88"
+      },
+      "23_negative": {
+        "value": "-92"
+      },
+      "24_negative": {
+        "value": "-96"
+      },
+      "25_negative": {
+        "value": "-100"
       }
   }
 }
