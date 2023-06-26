@@ -85,7 +85,7 @@ namespace DIPS.Mobile.UI.Resources.Icons
 
         foreach(var resource in resources)
         {
-            if(resourceType == "string")
+            if(resourceType == "Color")
             {
                 dictionaryContent += $"[\"{resource.Key}\"] = Color.FromArgb(\"{resource.Value}\"),\n";
             }
