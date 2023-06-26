@@ -9,7 +9,7 @@ public static class MobileFramework
     {
         //Colors
         WriteLine("Colors");
-        var comment = $"Do not edit directly, generated {DateTime.Now} from DIPS.Mobile.DesignTokens\n";
+        var comment = $"\nDo not edit directly,\ngenerated {DateTime.Now} from DIPS.Mobile.DesignTokens\n";
         var colorsResourceDictionaryRaw = BuildResourceDictionary("ColorResources", "Colors", colors, "Color", comment, "DIPS.Mobile.UI.Resources.Colors");
 
         WriteLine("Building enum csharp file");
@@ -83,6 +83,7 @@ namespace DIPS.Mobile.UI.Resources.Icons
     {
         string dictionaryContent = "";
 
+
         foreach(var resource in resources)
         {
             if(resourceType == "Color")
@@ -99,7 +100,8 @@ namespace DIPS.Mobile.UI.Resources.Icons
             }
         }
 
-        string csharpContent = @$"//{comment}
+        var csharpComment = comment.Replace("\nDo", "/*\nDo").Replace("DIPS.Mobile.DesignTokens", "DIPS.Mobile.DesignTokens\n*/");
+        string csharpContent = @$"{csharpComment}
         namespace {resourceNamespace};
         internal static class {className}
         {{
