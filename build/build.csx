@@ -29,11 +29,16 @@ AsyncStep generate = async () =>
 
     var icons = GetIcons();
 
+    var animations = GetAnimations();
+
     //Create mobile resources
-    MobileFramework.CreateResources(colors, sizes,icons, outputDir);
+    MobileFramework.CreateResources(colors, sizes,icons,animations, outputDir);
 
     //Move icons to output folder
     MoveIcons();
+
+    //Move animations to output folder
+    MoveAnimations();
 };
 
 
@@ -131,6 +136,18 @@ public static void MoveIcons()
 
 }
 
+public static void MoveAnimations()
+{
+    var animationsDir = Path.Combine(outputDir, "dotnet", "maui", "Animations");
+    if(!Directory.Exists(animationsDir))
+    {
+        Directory.CreateDirectory(animationsDir);
+    }
+
+    CopyDirectory(Path.Combine(srcDir, "tokens", "animations"), animationsDir, true, true);
+
+}
+
 public static Dictionary<string, string> GetIcons()
 {
     var iconsPath = Path.Combine(srcDir, "tokens", "icons");
@@ -150,6 +167,27 @@ public static Dictionary<string, string> GetIcons()
         iconNames.Add(iconName, iconName+".png");
     }
     return iconNames;
+}
+
+public static Dictionary<string, string> GetAnimations()
+{
+    var animationsPath = Path.Combine(srcDir, "tokens", "animations");
+     // Get information about the source directory
+    var dir = new DirectoryInfo(animationsPath);
+
+    // Check if the source directory exists
+    if (!dir.Exists)
+        throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+    // Cache directories before we start copying
+    DirectoryInfo[] dirs = dir.GetDirectories();
+    var animationNames = new Dictionary<string, string>();
+    foreach (FileInfo file in dir.EnumerateFiles())
+    {
+        var iconName = file.Name.Replace(".json", "");
+        animationNames.Add(iconName, iconName+".json");
+    }
+    return animationNames;
 }
 
 static void CopyDirectory(string sourceDir, string destinationDir, bool recursive=false, bool overwriteFiles=false)

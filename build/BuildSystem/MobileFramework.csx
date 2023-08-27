@@ -5,7 +5,12 @@ using Newtonsoft.Json;
 
 public static class MobileFramework
 {
-    public static void CreateResources(Dictionary<string,string> colors,Dictionary<string,string> sizes, Dictionary<string, string> icons, string outputDir)
+    public static void CreateResources(
+        Dictionary<string,string> colors,
+        Dictionary<string,string> sizes, 
+        Dictionary<string, string> icons,
+        Dictionary<string, string> animations, 
+        string outputDir)
     {
         //Colors
         WriteLine("Colors");
@@ -27,6 +32,7 @@ namespace DIPS.Mobile.UI.Resources.Colors
         var colorsOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Colors"));
         var sizesOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Sizes"));
         var iconsOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Icons"));
+        var animationsOutputDir = Directory.CreateDirectory(Path.Combine(mauiOutputDir.FullName, "Animations"));
 
         //Write colors to XAML file and write enum file
         var colorsResourceDictionaryFullPath = Path.Combine(colorsOutputDir.FullName, "ColorResources.cs");
@@ -76,7 +82,25 @@ namespace DIPS.Mobile.UI.Resources.Icons
         System.IO.File.WriteAllText(iconsEnumFilePath, iconsEnumCsharpContent);
         WriteLine($"C# Resources output file: {iconsResourceDictionaryFullPath}");
         WriteLine($"C# Enum file: {iconsEnumFilePath}");
-        
+
+        //Animations
+        WriteLine("Building Animations");
+         string animationsEnumCsharpContent = csharpComment+@"
+namespace DIPS.Mobile.UI.Resources.Animations
+{
+    public enum AnimationName
+    {
+        "+string.Join(", \n", animations.Keys.Select(iconName => iconName))+@"
+    }
+}";
+        var animationsResourceDictionary = BuildResourceDictionary("AnimationResources", "Animations", animations, "string", comment, "DIPS.Mobile.UI.Resources.Animations");
+
+        var animationsResourceDictionaryFullPath = Path.Combine(animationsOutputDir.FullName, "AnimationResources.cs");
+        var animationsEnumFilePath = Path.Combine(animationsOutputDir.FullName, "AnimationName.cs");
+        System.IO.File.WriteAllText(animationsResourceDictionaryFullPath, animationsResourceDictionary);
+        System.IO.File.WriteAllText(animationsEnumFilePath, animationsEnumCsharpContent);
+        WriteLine($"C# Resources output file: {animationsResourceDictionaryFullPath}");
+        WriteLine($"C# Enum file: {animationsEnumFilePath}");
     }
 
     private static string BuildResourceDictionary(string className, string dictionaryName, Dictionary<string,string> resources, string resourceType, string comment, string resourceNamespace)
@@ -93,6 +117,11 @@ namespace DIPS.Mobile.UI.Resources.Icons
             else if(resourceType == "ImageSource")
             {
                 dictionaryContent += $"[\"{resource.Key}\"] = \"{resource.Value}\",\n";
+            }
+            else if(resourceType == "string")
+            {
+                dictionaryContent += $"[\"{resource.Key}\"] = \"{resource.Value}\",\n";
+
             }
             else
             {
