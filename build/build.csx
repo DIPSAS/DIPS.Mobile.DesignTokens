@@ -81,6 +81,7 @@ AsyncStep createPR = async () =>
     var generatedDotnetMauiColorsDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Colors"));
     var generatedDotnetMauiIconsDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Icons"));
     var generatedDotnetMauiSizesDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Sizes"));
+    var generatedDotnetMauiAnimationsDir = generatedDotnetMauiDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Animations"));
 
     //The source repository paths
     var libraryPath = Path.Combine(repoDir, "src", "library", "DIPS.Mobile.UI");
@@ -90,6 +91,7 @@ AsyncStep createPR = async () =>
     var libraryDotnetMauiColorsDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Colors"));
     var libraryDotnetMauiIconsDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Icons"));
     var libraryDotnetMauiSizesDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Sizes"));
+    var libraryDotnetMauiAnimationsDir = libraryResourcesDir.GetDirectories().FirstOrDefault(d => d.Name.Equals("Animations"));
 
 
     //Copy to the correct folders in the branch
@@ -97,6 +99,7 @@ AsyncStep createPR = async () =>
     CopyDirectory(generatedDotnetMauiColorsDir.FullName, libraryDotnetMauiColorsDir.FullName, true, true);
     CopyDirectory(generatedDotnetMauiIconsDir.FullName, libraryDotnetMauiIconsDir.FullName, true, true);
     CopyDirectory(generatedDotnetMauiSizesDir.FullName, libraryDotnetMauiSizesDir.FullName, true, true);
+    CopyDirectory(generatedDotnetMauiAnimationsDir.FullName, libraryDotnetMauiAnimationsDir.FullName, true, true);
 
     //Commit changes
     WriteLine($"Resources moved to folders, commiting changes");
