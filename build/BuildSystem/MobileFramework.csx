@@ -68,7 +68,7 @@ namespace DIPS.Mobile.UI.Resources.Icons
 {
     public enum IconName
     {
-        "+string.Join(", \n", icons.Keys.Select(iconName => iconName))+@"
+        "+string.Join(", \n", icons.Keys.Select(iconName => $"///<summary><a href=\"https://raw.githubusercontent.com/DIPSAS/DIPS.Mobile.UI/main/src/library/DIPS.Mobile.UI/Resources/Icons/{iconName}.svg\">View the icon in the browser</a></summary>"+"\n"+iconName))+@"
     }
 }";
 
