@@ -46,6 +46,7 @@ public static async void MoveSizes(Dictionary<string,string> sizes)
         Directory.CreateDirectory(resourceIconsDir);
     }
     var json = JsonConvert.SerializeObject(sizes, Formatting.Indented);
+    var generatedSizes = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
     await System.IO.File.WriteAllTextAsync(resourceIconsDir+"/sizes.json", json);
 }
 
