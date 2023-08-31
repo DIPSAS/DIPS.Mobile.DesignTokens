@@ -1,8 +1,9 @@
+#r "nuget:Newtonsoft.Json, 13.0.2"
 #load "BuildSystem/Steps.csx"
 #load "BuildSystem/StyleDictionary.csx"
 #load "BuildSystem/Repository.csx"
 #load "BuildSystem/Dump.csx"
-#load "BuildSystem/MobileFramework.csx"
+using Newtonsoft.Json;
 
 private static string rootDir => Repository.RootDir();
 private static string srcDir => Path.Combine(Repository.RootDir(),"src");
@@ -21,23 +22,9 @@ AsyncStep generate = async () =>
     //Generate native Android and iOS resources
     await StyleDictionary.Build(srcDir);
 
-    // Use Android resources to generate XAML Resources
-    var colors = await StyleDictionary.GetAndroidColors(srcDir);
-
-    // CreateSizes(); TODO: Generate sizes from a multiplier
-    var sizes = await StyleDictionary.GetSizes(srcDir);
-
-    var icons = GetIcons();
-
-    var animations = GetAnimations();
-
-    //Create mobile resources
-    MobileFramework.CreateResources(colors, sizes,icons,animations, outputDir);
-
-    //Move icons to output folder
+    MoveSizes(await StyleDictionary.GetSizes(srcDir));
+    MoveColors(await StyleDictionary.GetAndroidColors(srcDir));
     MoveIcons();
-
-    //Move animations to output folder
     MoveAnimations();
 };
 
@@ -51,9 +38,31 @@ if(args.Count() == 0){
 
 await ExecuteSteps(args);
 
+public static async void MoveSizes(Dictionary<string,string> sizes)
+{
+    var resourceIconsDir = Path.Combine(outputDir, "tokens", "sizes");
+    if(!Directory.Exists(resourceIconsDir))
+    {
+        Directory.CreateDirectory(resourceIconsDir);
+    }
+    var json = JsonConvert.SerializeObject(sizes, Formatting.Indented);
+    await System.IO.File.WriteAllTextAsync(resourceIconsDir+"/sizes.json", json);
+}
+
+public static async void MoveColors(Dictionary<string,string> colors)
+{
+    var resourceIconsDir = Path.Combine(outputDir, "tokens", "colors");
+    if(!Directory.Exists(resourceIconsDir))
+    {
+        Directory.CreateDirectory(resourceIconsDir);
+    }
+    var json = JsonConvert.SerializeObject(colors, Formatting.Indented);
+    await System.IO.File.WriteAllTextAsync(resourceIconsDir+"/colors.json", json);
+}
+
 public static void MoveIcons()
 {
-    var resourceIconsDir = Path.Combine(outputDir, "dotnet", "maui", "Icons");
+    var resourceIconsDir = Path.Combine(outputDir, "tokens", "icons");
     if(!Directory.Exists(resourceIconsDir))
     {
         Directory.CreateDirectory(resourceIconsDir);
@@ -65,7 +74,7 @@ public static void MoveIcons()
 
 public static void MoveAnimations()
 {
-    var animationsDir = Path.Combine(outputDir, "dotnet", "maui", "Animations");
+    var animationsDir = Path.Combine(outputDir, "tokens", "animations");
     if(!Directory.Exists(animationsDir))
     {
         Directory.CreateDirectory(animationsDir);
