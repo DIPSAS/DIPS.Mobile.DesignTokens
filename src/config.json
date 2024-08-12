@@ -14,7 +14,7 @@
             ]
         },
         "raw": {
-            "transforms": ["attribute/cti", "name/cti/kebab"],
+            "transforms": ["attribute/cti", "name/kebab"],
             "buildPath": "../output/raw/",
             "files": [
                 {
