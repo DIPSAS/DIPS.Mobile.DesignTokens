@@ -13,6 +13,8 @@ fi
 
 if npm list --prefix ./src | grep style-dictionary > /dev/null ; then
    echo "✅ npm package: style-dictionary was found"
+   echo "style-dictionary version: $(npm view style-dictionary version)"
 else
    npm install --prefix ./src style-dictionary
+   echo "style-dictionary version: $(npm view style-dictionary version)"
 fi
