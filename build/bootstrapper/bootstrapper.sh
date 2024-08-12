@@ -8,7 +8,9 @@ if dotnet tool list -g | grep dotnet-script > /dev/null ; then
    echo "✅ dotnet-script was found"
 else
    echo "❌ dotnet-script was not found, installing..."
+   npm_config_loglevel=silent 
    dotnet tool install -g dotnet-script > /dev/null
+   npm_config_loglevel=error
 fi
 
 if npm list --prefix ./src | grep style-dictionary > /dev/null ; then
