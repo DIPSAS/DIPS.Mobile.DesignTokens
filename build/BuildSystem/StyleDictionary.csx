@@ -8,7 +8,7 @@ public static class StyleDictionary
 {
     public static Task Build(string configPath)
     {
-        return Command.ExecuteAsync($"npx", $"style-dictionary build --silent", configPath, verbose: true);
+        return Command.ExecuteAsync($"npx", $"style-dictionary build", configPath, verbose: true);
     }
     /// <summary>
     /// Get the config file from style dictionary root folder
