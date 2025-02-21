@@ -31,6 +31,7 @@ public static class StyleDictionary
 
     private static async Task<Root> GetVariablesFile()
     {
+        Console.WriteLine($"Reading variables file: {VariablesFilePath}");
         var json = await System.IO.File.ReadAllTextAsync(VariablesFilePath);
         return JsonConvert.DeserializeObject<Root>(json);
     }
