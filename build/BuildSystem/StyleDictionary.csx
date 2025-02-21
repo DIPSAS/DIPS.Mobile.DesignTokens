@@ -15,23 +15,11 @@ public static class StyleDictionary
 #nullable disable
 
     private static readonly string s_globalColorCollectionName = "global colors";
+    private static readonly string s_sizeCollectionName = "sizes";
     private static readonly string s_semanticColorCollectionName = "semantic colors";
 
-
-    public static Task Build(string configPath)
-    {
-        return Command.ExecuteAsync($"npx", $"style-dictionary build", configPath, verbose: true);
-    }
-    /// <summary>
-    /// Get the config file from style dictionary root folder
-    /// </summary>
-    /// <param name="rootPath">The filepath to style dictionary root folder with the config.json file</param>
-    /// <returns></returns>
-    public static async Task<Config> GetConfig(string rootPath){
-        var json = await System.IO.File.ReadAllTextAsync(Path.Combine(rootPath, "config.json"));
-        return JsonConvert.DeserializeObject<Config>(json);
-    }
-
+    private const string ColorPrefix = "color_";
+    
     private static async Task<Root> GetVariablesFile()
     {
         if(Root is not null)
@@ -46,89 +34,36 @@ public static class StyleDictionary
         return Root;
     }
 
-    /// <summary>
-    /// Get Android Colors
-    /// </summary>
-    /// <param name="rootPath">The filepath to style dictionary root folder with the config.json file</param>
-    public static async Task<Dictionary<string, string>> GetAndroidColors(string rootPath){
-        var config = await GetConfig(rootPath);
-        var buildPath = config.Platforms.Android.BuildPath;
-        var actualBuildPath = Path.Combine(rootPath, buildPath);
-        var file = config.Platforms.Android.Files.FirstOrDefault(f => f.Format.Equals("android/colors"));
-        var androidResourceFile = actualBuildPath + file.Destination;
-        var androidColorsRawXml = await System.IO.File.ReadAllTextAsync(androidResourceFile);
-
-        var colorXml = new XmlDocument();
-        colorXml.LoadXml(androidColorsRawXml);
-
-        var colorDictionary = new Dictionary<string, string>();
-        for (int i = 0; i < colorXml.ChildNodes.Count; i++)
-        {
-            if (colorXml.ChildNodes[i].Name == "resources")
-            {
-                var resources = colorXml.ChildNodes[i];
-                var colors = resources.ChildNodes;
-                for (int j = 0; j < colors.Count; j++)
-                {
-                    var colorNode = colors[j];
-                    //Get color name
-                    var attributes = colorNode.Attributes;
-                    string colorName = null;
-                    if (attributes != null)
-                    {
-                        if (attributes[0].Name == "name")
-                        {
-                            colorName = attributes[0].Value.Replace("-", "_");    
-                        }
-                    }
-                    
-                    //Get color value
-                    var valueNode = colorNode.FirstChild;
-                    string colorValue = null;
-                    if (valueNode != null)
-                    {
-                        colorValue = valueNode.Value;
-                    }
-
-                    if (colorName != null && colorValue != null)
-                    {
-                        colorDictionary.Add(colorName, colorValue);    
-                    }
-                }
-            }
-        }
-        return colorDictionary;
-    }
-
-    public static async Task<Dictionary<string,string>> GetSizes(string rootPath)
+    public static async Task GenerateSizes()
     {
-        var sizes = new Dictionary<string,string> ();
-        var config = await GetConfig(rootPath);
-        var fileConfig = config.Platforms.Raw.Files.FirstOrDefault(f => f.Filter.Attributes.Category.Equals("size"));
-        if(fileConfig != null)
-        {
-            var buildPath = config.Platforms.Raw.BuildPath;
-            var actualBuildPath = Path.Combine(rootPath, buildPath);
-            var fileName = fileConfig.Destination;
-            var rawJson = await System.IO.File.ReadAllTextAsync(actualBuildPath + fileName);
-            var jObject = JObject.Parse(rawJson);
+        var sizeVariables = await GetCollectionVariables(s_sizeCollectionName);
 
-            foreach (var property in jObject.Properties()) //Each size
+        var semanticSizeVariables = sizeVariables.Where(sizeVariable => sizeVariable.IsAlias).ToList();
+        
+        var nonSemanticSizes = sizeVariables.Where(sizeVariable => !sizeVariable.IsAlias).Select(sizeVariable => new TokenVariable(sizeVariable.Name, sizeVariable.Value.ToString(), charactersToRemove: "Global/")).ToList();
+        var semanticSizes = new List<TokenVariable>();
+
+        foreach(var semanticVariable in semanticSizeVariables)
+        {
+            var globalSize = nonSemanticSizes.FirstOrDefault(size => {
+                if (semanticVariable.Value is JObject variableValue)
+                {
+                    var name = variableValue["name"]?.ToString();
+                    return size.OriginalName == name;
+                }
+                return false;
+            });
+
+            if(globalSize is not null)
             {
-                sizes.Add(property.Name.ToString().Replace("-", "_"), property.Value.ToString());
+                semanticSizes.Add(new TokenVariable(semanticVariable.Name, globalSize.Value, charactersToRemove: "Global/"));
             }
-
-        }else
-        {
-            WriteLine("No size defined in StyleDictionary config");
         }
-        return sizes;
-    }
 
-    //public async Task GenerateSizes()
-    //{
-        // TODO
-    //}
+        var sizeDictionary = nonSemanticSizes.Concat(semanticSizes).ToDictionary(s => s.Name, s => s.Value);
+
+        await WriteToFile("tokens/sizes/sizes", JsonConvert.SerializeObject(sizeDictionary, Newtonsoft.Json.Formatting.Indented), "json");
+    }
 
     public static async Task GenerateColors()
     {
@@ -151,27 +86,25 @@ public static class StyleDictionary
         return System.IO.File.WriteAllTextAsync(Path.Combine(OutputDirPath, $"{filepath}.{format}"), content);
     }
 
-    public static string ConvertAndGenerateAndroidColors(List<ColorVariable> colors)
+    public static string ConvertAndGenerateAndroidColors(List<TokenVariable> colors)
     {
         var androidColors = colors.Select(c => $"   <color name=\"{c.Name}\">{c.Value}</color>");
         return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n \n\n <!-- Do not modify, generated at: {DateTime.Now} --> \n\n  <resources>\n{string.Join("\n", androidColors)}\n</resources>";
     }
 
-    private static async Task<List<ColorVariable>> GetGlobalColors()
+    private static async Task<List<TokenVariable>> GetGlobalColors()
     {
-        var variables = await GetVariablesFile();
-        
         var globalColorVariables = await GetCollectionVariables(s_globalColorCollectionName);
 
         return globalColorVariables
-        .Select(v => new ColorVariable(v.Name, v.Value.ToString())).ToList();
+        .Select(v => new TokenVariable(v.Name, v.Value.ToString(), ColorPrefix)).ToList();
     }
 
-    private static async Task<List<ColorVariable>> GetSemanticColors(List<ColorVariable> globalColors)
+    private static async Task<List<TokenVariable>> GetSemanticColors(List<TokenVariable> globalColors)
     {
         var semanticColorVariables = await GetCollectionVariables(s_semanticColorCollectionName);
 
-        var semanticColors = new List<ColorVariable>();
+        var semanticColors = new List<TokenVariable>();
 
         foreach(var variable in semanticColorVariables)
         {
@@ -187,12 +120,12 @@ public static class StyleDictionary
                 });
                 if(globalColor != null)
                 {
-                    semanticColors.Add(new ColorVariable(variable.Name, globalColor.Value));
+                    semanticColors.Add(new TokenVariable(variable.Name, globalColor.Value, ColorPrefix));
                 }
             }
             else
             {
-                semanticColors.Add(new ColorVariable(variable.Name, variable.Value.ToString()));
+                semanticColors.Add(new TokenVariable(variable.Name, variable.Value.ToString(), ColorPrefix));
                 WriteLine($"Semantic color: {variable.Name} does not point to a global color, using its direct value: {variable.Value}");
             }
         }
@@ -210,76 +143,23 @@ public static class StyleDictionary
 }
 
 
-public class ColorVariable
+public class TokenVariable
 {
-    private const string ColorPrefix = "color_";
 
-    public ColorVariable(string name, string value)
+#nullable enable
+    public TokenVariable(string name, string value, string? prefix = null, string? charactersToRemove = null)
     {
-        Name = ColorPrefix + name.Replace("/", "_").Replace(" ", "_").ToLower();
+        var modifiedName = name;
+        if(charactersToRemove is not null)
+        {
+            modifiedName = modifiedName.Replace(charactersToRemove, string.Empty);
+        }
+        Name = (prefix is not null ? prefix : string.Empty) + modifiedName.Replace("/", "_").Replace(" ", "_").ToLower();
         OriginalName = name;
         Value = value;
     }
-
-
+#nullable disable
     public string OriginalName { get; set; }
     public string Name { get; set; }
     public string Value { get; set; }
 }
-
-
-#region config objects
-    public class Android
-    {
-        public string TransformGroup { get; set; }
-        public string BuildPath { get; set; }
-        public List<File> Files { get; set; }
-    }
-
-    public class Attributes
-    {
-        public string Category { get; set; }
-    }
-
-    public class File
-    {
-        public string Destination { get; set; }
-        public string Format { get; set; }
-        public string ClassName { get; set; }
-        public string Type { get; set; }
-        public Filter Filter { get; set; }
-    }
-
-    public class Filter
-    {
-        public Attributes Attributes { get; set; }
-    }
-
-    public class iOS
-    {
-        public string TransformGroup { get; set; }
-        public string BuildPath { get; set; }
-        public List<File> Files { get; set; }
-    }
-
-    public class Raw
-    {
-        public string TransformGroup { get; set; }
-        public string BuildPath { get; set; }
-        public List<File> Files { get; set; }
-    }
-
-    public class Platforms
-    {
-        public Android Android { get; set; }
-        public iOS iOS { get; set; }
-        public Raw Raw { get; set; }
-    }
-
-    public class Config
-    {
-        public List<string> Source { get; set; }
-        public Platforms Platforms { get; set; }
-    }
-#endregion
-

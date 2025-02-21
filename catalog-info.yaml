@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: dips-mobile-designtokens
   title: DIPS Mobile DesignTokens
-  description: A repository for maintaining and building Android, iOS and Xamarin.Forms style resources from exported Design Tokens from DIPS Mobile Design System. Design tokens makes it easier for developers and designers to communicate the style of the product by conventional names for the resources. The exported resources from this repository will be included in a shared UX components library for all mobile apps in DIPS to use.
+  description: A repository for maintaining and building Android, iOS and MAUI style resources from exported Design Tokens from DIPS Mobile Design System. Design tokens makes it easier for developers and designers to communicate the style of the product by conventional names for the resources. The exported resources from this repository will be included in a shared UX components library for all mobile apps in DIPS to use.
   tags:
     - design
   links:
@@ -11,5 +11,5 @@ metadata:
         url: https://github.com/DIPSAS/DIPS.Mobile.DesignTokens
 spec:
   type: library
-  owner: team-awesomesauce
+  owner: team-mobil
   lifecycle: experimental

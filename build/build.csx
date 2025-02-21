@@ -20,12 +20,10 @@ AsyncStep generate = async () =>
     CreateDirectories();
 
     Console.WriteLine("🎨 Generating Android and iOS resources");
-    //Generate native Android and iOS resources
-    await StyleDictionary.Build(srcDir);
 
     await StyleDictionary.GenerateColors();
+    await StyleDictionary.GenerateSizes();
 
-    MoveSizes(await StyleDictionary.GetSizes(srcDir));
     MoveIcons();
     MoveAnimations();
 };
@@ -33,6 +31,7 @@ AsyncStep generate = async () =>
 private static void CreateDirectories()
 {
     Directory.CreateDirectory(outputDir);
+    Directory.CreateDirectory(Path.Combine(outputDir, "android"));
     Directory.CreateDirectory(Path.Combine(outputDir, "tokens"));
     Directory.CreateDirectory(Path.Combine(outputDir, "tokens", "colors"));
     Directory.CreateDirectory(Path.Combine(outputDir, "tokens", "sizes"));
