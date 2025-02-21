@@ -10,6 +10,9 @@ public static class StyleDictionary
     public static string VariablesFilePath { get; set; }
     public static string OutputDirPath { get; set; }
     public static string ColorTokenDirPath { get; set; }
+#nullable enable
+    public static Root? Root { get; set; }
+#nullable disable
 
     private static readonly string s_globalColorCollectionName = "global colors";
     private static readonly string s_semanticColorCollectionName = "semantic colors";
@@ -31,9 +34,16 @@ public static class StyleDictionary
 
     private static async Task<Root> GetVariablesFile()
     {
+        if(Root is not null)
+        {
+            return Root;
+        }
+
         WriteLine($"Reading variables file: {VariablesFilePath}");
+
         var json = await System.IO.File.ReadAllTextAsync(VariablesFilePath);
-        return JsonConvert.DeserializeObject<Root>(json);
+        Root = JsonConvert.DeserializeObject<Root>(json);
+        return Root;
     }
 
     /// <summary>
