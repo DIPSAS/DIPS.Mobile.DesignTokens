@@ -1,11 +1,20 @@
 #r "nuget:Newtonsoft.Json, 13.0.2"
 #load "Command.csx"
+#load "Models/Models.csx"
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Xml;
 
 public static class StyleDictionary
 {
+    public static string VariablesFilePath { get; set; }
+    public static string OutputDirPath { get; set; }
+    public static string ColorTokenDirPath { get; set; }
+
+    private static readonly string s_globalColorCollectionName = "global colors";
+    private static readonly string s_semanticColorCollectionName = "semantic colors";
+
+
     public static Task Build(string configPath)
     {
         return Command.ExecuteAsync($"npx", $"style-dictionary build", configPath, verbose: true);
@@ -18,6 +27,12 @@ public static class StyleDictionary
     public static async Task<Config> GetConfig(string rootPath){
         var json = await System.IO.File.ReadAllTextAsync(Path.Combine(rootPath, "config.json"));
         return JsonConvert.DeserializeObject<Config>(json);
+    }
+
+    private static async Task<Root> GetVariablesFile()
+    {
+        var json = await System.IO.File.ReadAllTextAsync(VariablesFilePath);
+        return JsonConvert.DeserializeObject<Root>(json);
     }
 
     /// <summary>
@@ -98,7 +113,117 @@ public static class StyleDictionary
         }
         return sizes;
     }
+
+    //public async Task GenerateSizes()
+    //{
+        // TODO
+    //}
+
+    public static async Task GenerateColors()
+    {
+        var globalColors = await GetGlobalColors();
+        var semanticColors = await GetSemanticColors(globalColors);
+
+        var colors = globalColors.Concat(semanticColors).ToList();
+
+        var colorDictionary = colors.ToDictionary(c => c.Name, c => c.Value);
+
+        var androidColors = ConvertAndGenerateAndroidColors(colors);
+
+        await Task.WhenAll(WriteToFile("tokens/colors/colors", JsonConvert.SerializeObject(colorDictionary, Newtonsoft.Json.Formatting.Indented), "json"), WriteToFile("android/colors", androidColors, "xml"));
+    }
+
+    private static Task WriteToFile(string filepath, string content, string format)
+    {
+        Console.WriteLine($"Writing file: {Path.Combine(OutputDirPath, $"{filepath}.{format}")}");
+
+        string contentToWrite = string.Empty;
+        if(format == "xml")
+        {
+            contentToWrite = $"\n\n <!-- Do not modify, generated at: {DateTime.Now} --> \n\n";
+        }
+
+        contentToWrite += content;
+
+        return System.IO.File.WriteAllTextAsync(Path.Combine(OutputDirPath, $"{filepath}.{format}"), contentToWrite);
+    }
+
+    public static string ConvertAndGenerateAndroidColors(List<ColorVariable> colors)
+    {
+        var androidColors = colors.Select(c => $"   <color name=\"{c.Name}\">{c.Value}</color>");
+        return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n{string.Join("\n", androidColors)}\n</resources>";
+    }
+
+    private static async Task<List<ColorVariable>> GetGlobalColors()
+    {
+        var variables = await GetVariablesFile();
+        
+        var globalColorVariables = await GetCollectionVariables(s_globalColorCollectionName);
+
+        return globalColorVariables
+        .Select(v => new ColorVariable(v.Name, v.Value.ToString())).ToList();
+    }
+
+    private static async Task<List<ColorVariable>> GetSemanticColors(List<ColorVariable> globalColors)
+    {
+        var semanticColorVariables = await GetCollectionVariables(s_semanticColorCollectionName);
+
+        var semanticColors = new List<ColorVariable>();
+
+        foreach(var variable in semanticColorVariables)
+        {
+            if(variable.IsAlias)
+            {
+                var globalColor = globalColors.FirstOrDefault(c => {
+                    if (variable.Value is JObject variableValue)
+                    {
+                        var name = variableValue["name"]?.ToString();
+                        return c.OriginalName == name;
+                    }
+                    return false;
+                });
+                if(globalColor != null)
+                {
+                    semanticColors.Add(new ColorVariable(variable.Name, globalColor.Value));
+                }
+            }
+            else
+            {
+                semanticColors.Add(new ColorVariable(variable.Name, variable.Value.ToString()));
+                WriteLine($"Semantic color: {variable.Name} does not point to a global color, using its direct value: {variable.Value}");
+            }
+        }
+
+        return semanticColors;
+    }
+
+    private static async Task<List<Variable>> GetCollectionVariables(string collectionName)
+    {
+        var variables = await GetVariablesFile();
+        var collection = variables.Collections.FirstOrDefault(c => c.Name.ToLower() == collectionName) ?? throw new Exception($"No Collection with name `{collectionName}' found in the variables.json file");
+        var firstMode = collection.Modes.FirstOrDefault() ?? throw new Exception($"No modes found in the `{collectionName}' collection");
+        return firstMode.Variables;
+    }
 }
+
+
+public class ColorVariable
+{
+    private const string ColorPrefix = "color_";
+
+    public ColorVariable(string name, string value)
+    {
+        Name = ColorPrefix + name.Replace("/", "_").ToLower();
+        OriginalName = name;
+        Value = value;
+    }
+
+
+    public string OriginalName { get; set; }
+    public string Name { get; set; }
+    public string Value { get; set; }
+}
+
 
 #region config objects
     public class Android
