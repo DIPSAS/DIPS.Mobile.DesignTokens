@@ -148,21 +148,13 @@ public static class StyleDictionary
     {
         WriteLine($"Writing file: {Path.Combine(OutputDirPath, $"{filepath}.{format}")}");
 
-        string contentToWrite = string.Empty;
-        if(format == "xml")
-        {
-            contentToWrite = $"\n\n <!-- Do not modify, generated at: {DateTime.Now} --> \n\n";
-        }
-
-        contentToWrite += content;
-
-        return System.IO.File.WriteAllTextAsync(Path.Combine(OutputDirPath, $"{filepath}.{format}"), contentToWrite);
+        return System.IO.File.WriteAllTextAsync(Path.Combine(OutputDirPath, $"{filepath}.{format}"), content);
     }
 
     public static string ConvertAndGenerateAndroidColors(List<ColorVariable> colors)
     {
         var androidColors = colors.Select(c => $"   <color name=\"{c.Name}\">{c.Value}</color>");
-        return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n{string.Join("\n", androidColors)}\n</resources>";
+        return $"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n \n\n <!-- Do not modify, generated at: {DateTime.Now} --> \n\n  <resources>\n{string.Join("\n", androidColors)}\n</resources>";
     }
 
     private static async Task<List<ColorVariable>> GetGlobalColors()
