@@ -6,8 +6,9 @@
 using Newtonsoft.Json;
 
 private static string rootDir => Repository.RootDir();
-private static string srcDir => Path.Combine(Repository.RootDir(),"src");
-private static string outputDir => Path.Combine(Repository.RootDir(),"output");
+private static string srcDir => Path.Combine(Repository.RootDir(), "src");
+private static string variablesFilePath = Path.Combine(srcDir, "tokens/variables.json");
+private static string outputDir => Path.Combine(Repository.RootDir(), "output");
 
 AsyncStep generate = async () =>
 {
@@ -16,20 +17,33 @@ AsyncStep generate = async () =>
         Directory.Delete(outputDir, true);
     }
     
-    Directory.CreateDirectory(outputDir);
+    CreateDirectories();
 
     Console.WriteLine("🎨 Generating Android and iOS resources");
     //Generate native Android and iOS resources
     await StyleDictionary.Build(srcDir);
 
+    await StyleDictionary.GenerateColors();
+
     MoveSizes(await StyleDictionary.GetSizes(srcDir));
-    MoveColors(await StyleDictionary.GetAndroidColors(srcDir));
     MoveIcons();
     MoveAnimations();
 };
 
+private static void CreateDirectories()
+{
+    Directory.CreateDirectory(outputDir);
+    Directory.CreateDirectory(Path.Combine(outputDir, "tokens"));
+    Directory.CreateDirectory(Path.Combine(outputDir, "tokens", "colors"));
+    Directory.CreateDirectory(Path.Combine(outputDir, "tokens", "sizes"));
+}
+
+StyleDictionary.VariablesFilePath = variablesFilePath;
+StyleDictionary.OutputDirPath = outputDir;
+
 var args = Args;
 if(args.Count() == 0){
+    
     await ExecuteSteps(new string[]{"help"});
     WriteLine("Please select steps to run:");
     var input = ReadLine();

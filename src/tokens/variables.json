@@ -1,0 +1,1080 @@
+{
+  "version": "1.0.4",
+  "metadata": {},
+  "collections": [
+    {
+      "name": "Sizes",
+      "modes": [
+        {
+          "name": "Mode 1",
+          "variables": [
+            {
+              "name": "Radius/XSmall",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 1"
+              }
+            },
+            {
+              "name": "Radius/Small",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 2"
+              }
+            },
+            {
+              "name": "Radius/Medium",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 3"
+              }
+            },
+            {
+              "name": "Radius/Large",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 3"
+              }
+            },
+            {
+              "name": "Content Margin/Xsmall",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 1"
+              }
+            },
+            {
+              "name": "Content Margin/Small",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 2"
+              }
+            },
+            {
+              "name": "Content Margin/Medium",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 3"
+              }
+            },
+            {
+              "name": "Content Margin/Large",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 4"
+              }
+            },
+            {
+              "name": "Page Margin/XSmall",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 3"
+              }
+            },
+            {
+              "name": "Page Margin/Small",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 4"
+              }
+            },
+            {
+              "name": "Page Margin/Medium",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 6"
+              }
+            },
+            {
+              "name": "Page Margin/XLarge",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 8"
+              }
+            },
+            {
+              "name": "Stroke/Small",
+              "type": "number",
+              "isAlias": false,
+              "value": 0.5
+            },
+            {
+              "name": "Global/Size 0,5",
+              "type": "number",
+              "isAlias": false,
+              "value": 2
+            },
+            {
+              "name": "Global/Size 1",
+              "type": "number",
+              "isAlias": false,
+              "value": 4
+            },
+            {
+              "name": "Global/Size 2",
+              "type": "number",
+              "isAlias": false,
+              "value": 8
+            },
+            {
+              "name": "Global/Size 3",
+              "type": "number",
+              "isAlias": false,
+              "value": 12
+            },
+            {
+              "name": "Global/Size 4",
+              "type": "number",
+              "isAlias": false,
+              "value": 16
+            },
+            {
+              "name": "Global/Size 5",
+              "type": "number",
+              "isAlias": false,
+              "value": 20
+            },
+            {
+              "name": "Global/Size 6",
+              "type": "number",
+              "isAlias": false,
+              "value": 24
+            },
+            {
+              "name": "Global/Size 7",
+              "type": "number",
+              "isAlias": false,
+              "value": 28
+            },
+            {
+              "name": "Global/Size 8",
+              "type": "number",
+              "isAlias": false,
+              "value": 32
+            },
+            {
+              "name": "Global/Size 9",
+              "type": "number",
+              "isAlias": false,
+              "value": 36
+            },
+            {
+              "name": "Global/Size 10",
+              "type": "number",
+              "isAlias": false,
+              "value": 40
+            },
+            {
+              "name": "Global/Size 11",
+              "type": "number",
+              "isAlias": false,
+              "value": 44
+            },
+            {
+              "name": "Stroke/Medium",
+              "type": "number",
+              "isAlias": false,
+              "value": 1
+            },
+            {
+              "name": "Stroke/Large",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 0,5"
+              }
+            },
+            {
+              "name": "Stroke/XLarge",
+              "type": "number",
+              "isAlias": false,
+              "value": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Global Colors",
+      "modes": [
+        {
+          "name": "Mode 1",
+          "variables": [
+            {
+              "name": "System/Black",
+              "type": "color",
+              "isAlias": false,
+              "value": "#000000"
+            },
+            {
+              "name": "System/White",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFFFFF"
+            },
+            {
+              "name": "Primary/90",
+              "type": "color",
+              "isAlias": false,
+              "value": "#047F89"
+            },
+            {
+              "name": "Primary/80",
+              "type": "color",
+              "isAlias": false,
+              "value": "#65868F"
+            },
+            {
+              "name": "Primary/70",
+              "type": "color",
+              "isAlias": false,
+              "value": "#98B2AE"
+            },
+            {
+              "name": "Primary/60",
+              "type": "color",
+              "isAlias": false,
+              "value": "#253ABE"
+            },
+            {
+              "name": "Primary/40",
+              "type": "color",
+              "isAlias": false,
+              "value": "#8DA9E4"
+            },
+            {
+              "name": "Primary/30",
+              "type": "color",
+              "isAlias": false,
+              "value": "#C0CFF0"
+            },
+            {
+              "name": "Primary/20",
+              "type": "color",
+              "isAlias": false,
+              "value": "#E1E9FA"
+            },
+            {
+              "name": "Primary/10",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F3F7F8"
+            },
+            {
+              "name": "Secondary/90",
+              "type": "color",
+              "isAlias": false,
+              "value": "#97C8CD"
+            },
+            {
+              "name": "Secondary/60",
+              "type": "color",
+              "isAlias": false,
+              "value": "#34C5C5"
+            },
+            {
+              "name": "Secondary/40",
+              "type": "color",
+              "isAlias": false,
+              "value": "#9AEDED"
+            },
+            {
+              "name": "Secondary/30",
+              "type": "color",
+              "isAlias": false,
+              "value": "#ECF3F4"
+            },
+            {
+              "name": "Secondary/20",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F0F5F7"
+            },
+            {
+              "name": "Neutral/90",
+              "type": "color",
+              "isAlias": false,
+              "value": "#262626"
+            },
+            {
+              "name": "Neutral/80",
+              "type": "color",
+              "isAlias": false,
+              "value": "#373D40"
+            },
+            {
+              "name": "Neutral/70",
+              "type": "color",
+              "isAlias": false,
+              "value": "#464C50"
+            },
+            {
+              "name": "Neutral/60",
+              "type": "color",
+              "isAlias": false,
+              "value": "#6A7073"
+            },
+            {
+              "name": "Neutral/50",
+              "type": "color",
+              "isAlias": false,
+              "value": "#8F9496"
+            },
+            {
+              "name": "Neutral/40",
+              "type": "color",
+              "isAlias": false,
+              "value": "#B6B7B9"
+            },
+            {
+              "name": "Neutral/30",
+              "type": "color",
+              "isAlias": false,
+              "value": "#DADBDC"
+            },
+            {
+              "name": "Neutral/20",
+              "type": "color",
+              "isAlias": false,
+              "value": "#ECEDEE"
+            },
+            {
+              "name": "Neutral/10",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F4F5F5"
+            },
+            {
+              "name": "Neutral/05",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F9F9F9"
+            },
+            {
+              "name": "Orange/800",
+              "type": "color",
+              "isAlias": false,
+              "value": "#EC942D"
+            },
+            {
+              "name": "Orange/200",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFE0BD"
+            },
+            {
+              "name": "Red/800",
+              "type": "color",
+              "isAlias": false,
+              "value": "#AB2E13"
+            },
+            {
+              "name": "Red/200",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFE6DF"
+            },
+            {
+              "name": "Blue/800",
+              "type": "color",
+              "isAlias": false,
+              "value": "#095ABF"
+            },
+            {
+              "name": "Blue/400",
+              "type": "color",
+              "isAlias": false,
+              "value": "#93BDE9"
+            },
+            {
+              "name": "Blue/200",
+              "type": "color",
+              "isAlias": false,
+              "value": "#D8EFFF"
+            },
+            {
+              "name": "Green/800",
+              "type": "color",
+              "isAlias": false,
+              "value": "#0F7157"
+            },
+            {
+              "name": "Green/400",
+              "type": "color",
+              "isAlias": false,
+              "value": "#98C9AD"
+            },
+            {
+              "name": "Green/200",
+              "type": "color",
+              "isAlias": false,
+              "value": "#DDF5D8"
+            },
+            {
+              "name": "Yellow/800",
+              "type": "color",
+              "isAlias": false,
+              "value": "#ECB62D"
+            },
+            {
+              "name": "Yellow/400",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F9DB73"
+            },
+            {
+              "name": "Yellow/200",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFED96"
+            },
+            {
+              "name": "Yellow/100",
+              "type": "color",
+              "isAlias": false,
+              "value": "#FFF9DB"
+            },
+            {
+              "name": "Obsolete/Danger",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F76D6D"
+            },
+            {
+              "name": "Obsolete/DangerLight",
+              "type": "color",
+              "isAlias": false,
+              "value": "#E19D9A"
+            },
+            {
+              "name": "Obsolete/Success",
+              "type": "color",
+              "isAlias": false,
+              "value": "#5CB85C"
+            },
+            {
+              "name": "Obsolete/AccentAir",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F4DDFA"
+            },
+            {
+              "name": "Obsolete/AccentLight",
+              "type": "color",
+              "isAlias": false,
+              "value": "#D297E3"
+            },
+            {
+              "name": "Obsolete/Accent",
+              "type": "color",
+              "isAlias": false,
+              "value": "#AB69BF"
+            },
+            {
+              "name": "Obsolete/Aqua",
+              "type": "color",
+              "isAlias": false,
+              "value": "#129DDB"
+            },
+            {
+              "name": "Tertiary/70",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F3583D"
+            },
+            {
+              "name": "Tertiary/50",
+              "type": "color",
+              "isAlias": false,
+              "value": "#F9A698"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Semantic colors",
+      "modes": [
+        {
+          "name": "Mode 1",
+          "variables": [
+            {
+              "name": "Surface/Default",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "System/White"
+              }
+            },
+            {
+              "name": "Surface/Active_subtle",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/20"
+              }
+            },
+            {
+              "name": "Surface/Deactivated",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/05"
+              }
+            },
+            {
+              "name": "Surface/Active",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/20"
+              }
+            },
+            {
+              "name": "Surface/Action",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/90"
+              }
+            },
+            {
+              "name": "Text/Default",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/90"
+              }
+            },
+            {
+              "name": "Text/On_alert",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/90"
+              }
+            },
+            {
+              "name": "Text/Subtle_large",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/80"
+              }
+            },
+            {
+              "name": "Text/Subtle_small",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/70"
+              }
+            },
+            {
+              "name": "Text/Action",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/90"
+              }
+            },
+            {
+              "name": "Text/Inverse",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "System/White"
+              }
+            },
+            {
+              "name": "Stroke/Default",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/30"
+              }
+            },
+            {
+              "name": "Stroke/Subtle",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/30"
+              }
+            },
+            {
+              "name": "Stroke/Action",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/90"
+              }
+            },
+            {
+              "name": "Icon/Default",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/80"
+              }
+            },
+            {
+              "name": "Icon/Action",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/90"
+              }
+            },
+            {
+              "name": "Icon/Subtle",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/30"
+              }
+            },
+            {
+              "name": "Icon/Neutral",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/80"
+              }
+            },
+            {
+              "name": "Background/Bg_light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/10"
+              }
+            },
+            {
+              "name": "Error/Dark",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Red/800"
+              }
+            },
+            {
+              "name": "Information/Dark",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Blue/800"
+              }
+            },
+            {
+              "name": "Attention/Dark",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Yellow/800"
+              }
+            },
+            {
+              "name": "Attention/Light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Yellow/200"
+              }
+            },
+            {
+              "name": "Attention/ExtraLight",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Yellow/100"
+              }
+            },
+            {
+              "name": "Information/Light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Blue/200"
+              }
+            },
+            {
+              "name": "Mandatory/Dark",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Orange/800"
+              }
+            },
+            {
+              "name": "Success/Dark",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Green/800"
+              }
+            },
+            {
+              "name": "Success/Light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Green/200"
+              }
+            },
+            {
+              "name": "Mandatory/Light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Orange/200"
+              }
+            },
+            {
+              "name": "Error/Light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Red/200"
+              }
+            },
+            {
+              "name": "Background/Bg_blue",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/10"
+              }
+            },
+            {
+              "name": "Background/Gradient_light",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/10"
+              }
+            },
+            {
+              "name": "Background/Gradient_blue",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/10"
+              }
+            },
+            {
+              "name": "Data visualization/Data_1",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Obsolete/Accent"
+              }
+            },
+            {
+              "name": "Data visualization/Data_1_subtle",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Obsolete/AccentAir"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Typography",
+      "modes": [
+        {
+          "name": "Style",
+          "variables": [
+            {
+              "name": "Header/1000",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 64,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Header/900",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 64,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Header/800",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 40,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Header/700",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 32,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Header/600",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 24,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Header/500",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 20,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Bold",
+                "lineHeight": 125,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "UI/400",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 18,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Medium",
+                "lineHeight": 150,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "UI/300",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 16,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Medium",
+                "lineHeight": 150,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "UI/200",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 14,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Medium",
+                "lineHeight": 139.9999976158142,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "UI/100",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 12,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Medium",
+                "lineHeight": 136.00000143051147,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Body/400",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 18,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Book",
+                "lineHeight": 136.00000143051147,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Body/300",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 16,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Book",
+                "lineHeight": 139.9999976158142,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Body/200",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 14,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Book",
+                "lineHeight": 139.9999976158142,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            },
+            {
+              "name": "Body/100",
+              "type": "typography",
+              "isAlias": false,
+              "value": {
+                "fontSize": 12,
+                "fontFamily": "Circular Std",
+                "fontWeight": "Book",
+                "lineHeight": 136.00000143051147,
+                "lineHeightUnit": "PERCENT",
+                "letterSpacing": 0,
+                "letterSpacingUnit": "PIXELS",
+                "textCase": "ORIGINAL",
+                "textDecoration": "NONE"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
