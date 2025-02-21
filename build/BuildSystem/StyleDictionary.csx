@@ -224,7 +224,7 @@ public class ColorVariable
 
     public ColorVariable(string name, string value)
     {
-        Name = ColorPrefix + name.Replace("/", "_").ToLower();
+        Name = ColorPrefix + name.Replace("/", "_").Replace(" ", "_").ToLower();
         OriginalName = name;
         Value = value;
     }
