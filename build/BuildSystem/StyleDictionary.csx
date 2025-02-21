@@ -31,7 +31,7 @@ public static class StyleDictionary
 
     private static async Task<Root> GetVariablesFile()
     {
-        Console.WriteLine($"Reading variables file: {VariablesFilePath}");
+        WriteLine($"Reading variables file: {VariablesFilePath}");
         var json = await System.IO.File.ReadAllTextAsync(VariablesFilePath);
         return JsonConvert.DeserializeObject<Root>(json);
     }
@@ -136,7 +136,7 @@ public static class StyleDictionary
 
     private static Task WriteToFile(string filepath, string content, string format)
     {
-        Console.WriteLine($"Writing file: {Path.Combine(OutputDirPath, $"{filepath}.{format}")}");
+        WriteLine($"Writing file: {Path.Combine(OutputDirPath, $"{filepath}.{format}")}");
 
         string contentToWrite = string.Empty;
         if(format == "xml")

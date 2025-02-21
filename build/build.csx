@@ -38,10 +38,12 @@ private static void CreateDirectories()
     Directory.CreateDirectory(Path.Combine(outputDir, "tokens", "sizes"));
 }
 
+StyleDictionary.VariablesFilePath = variablesFilePath;
+StyleDictionary.OutputDirPath = outputDir;
+
 var args = Args;
 if(args.Count() == 0){
-    StyleDictionary.VariablesFilePath = variablesFilePath;
-    StyleDictionary.OutputDirPath = outputDir;
+    
     await ExecuteSteps(new string[]{"help"});
     WriteLine("Please select steps to run:");
     var input = ReadLine();
