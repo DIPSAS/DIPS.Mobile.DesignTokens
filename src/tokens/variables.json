@@ -843,6 +843,70 @@
       ]
     },
     {
+      "name": "Dark colors",
+      "modes": [
+        {
+          "name": "Mode 1",
+          "variables": [
+            {
+              "name": "primary_d_90",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/90"
+              }
+            },
+            {
+              "name": "primary_d_80",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/80"
+              }
+            },
+            {
+              "name": "primary_d_70",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/70"
+              }
+            },
+            {
+              "name": "secondary_d_90",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/90"
+              }
+            },
+            {
+              "name": "secondary_d_30",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/30"
+              }
+            },
+            {
+              "name": "secondary_d_20",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Secondary/20"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Typography",
       "modes": [
         {

@@ -17,6 +17,7 @@ public static class StyleDictionary
     private static readonly string s_globalColorCollectionName = "global colors";
     private static readonly string s_sizeCollectionName = "sizes";
     private static readonly string s_semanticColorCollectionName = "semantic colors";
+    private static readonly string s_darkModeColorCollectionName = "dark colors";
 
     private const string ColorPrefix = "color_";
     
@@ -68,9 +69,10 @@ public static class StyleDictionary
     public static async Task GenerateColors()
     {
         var globalColors = await GetGlobalColors();
-        var semanticColors = await GetSemanticColors(globalColors);
+        var semanticColors = await GetColorsWithAlias(globalColors, s_semanticColorCollectionName);
+        var darkModeColors = await GetColorsWithAlias(globalColors, s_darkModeColorCollectionName);
 
-        var colors = globalColors.Concat(semanticColors).ToList();
+        var colors = globalColors.Concat(semanticColors).Concat(darkModeColors).ToList();
 
         var colorDictionary = colors.ToDictionary(c => c.Name, c => c.Value);
 
@@ -100,13 +102,13 @@ public static class StyleDictionary
         .Select(v => new TokenVariable(v.Name, v.Value.ToString(), ColorPrefix)).ToList();
     }
 
-    private static async Task<List<TokenVariable>> GetSemanticColors(List<TokenVariable> globalColors)
+    private static async Task<List<TokenVariable>> GetColorsWithAlias(List<TokenVariable> globalColors, string colorCollectionName)
     {
-        var semanticColorVariables = await GetCollectionVariables(s_semanticColorCollectionName);
+        var variables = await GetCollectionVariables(colorCollectionName);
 
-        var semanticColors = new List<TokenVariable>();
+        var colors = new List<TokenVariable>();
 
-        foreach(var variable in semanticColorVariables)
+        foreach(var variable in variables)
         {
             if(variable.IsAlias)
             {
@@ -120,17 +122,17 @@ public static class StyleDictionary
                 });
                 if(globalColor != null)
                 {
-                    semanticColors.Add(new TokenVariable(variable.Name, globalColor.Value, ColorPrefix));
+                    colors.Add(new TokenVariable(variable.Name, globalColor.Value, ColorPrefix));
                 }
             }
             else
             {
-                semanticColors.Add(new TokenVariable(variable.Name, variable.Value.ToString(), ColorPrefix));
-                WriteLine($"Semantic color: {variable.Name} does not point to a global color, using its direct value: {variable.Value}");
+                colors.Add(new TokenVariable(variable.Name, variable.Value.ToString(), ColorPrefix));
+                WriteLine($"Alias color: {variable.Name} does not point to a global color, using its direct value: {variable.Value}");
             }
         }
 
-        return semanticColors;
+        return colors;
     }
 
     private static async Task<List<Variable>> GetCollectionVariables(string collectionName)
@@ -154,7 +156,7 @@ public class TokenVariable
         {
             modifiedName = modifiedName.Replace(charactersToRemove, string.Empty);
         }
-        Name = (prefix is not null ? prefix : string.Empty) + modifiedName.Replace("/", "_").Replace(" ", "_").ToLower();
+        Name = (prefix is not null ? prefix : string.Empty) + modifiedName.Replace("/", "_").Replace(" ", "_").Replace(",", "_").ToLower();
         OriginalName = name;
         Value = value;
     }
