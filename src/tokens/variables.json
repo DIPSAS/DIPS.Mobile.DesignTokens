@@ -123,6 +123,12 @@
               "value": 0.5
             },
             {
+              "name": "Global/Size 0",
+              "type": "number",
+              "isAlias": false,
+              "value": 0
+            },
+            {
               "name": "Global/Size half",
               "type": "number",
               "isAlias": false,
@@ -446,7 +452,7 @@
               "isAlias": true,
               "value": {
                 "collection": "Sizes",
-                "name": "Global/Size half"
+                "name": "Global/Size 0"
               }
             },
             {
