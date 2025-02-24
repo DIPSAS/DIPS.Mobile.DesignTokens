@@ -815,6 +815,15 @@
               }
             },
             {
+              "name": "Surface/Action_on black",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/90"
+              }
+            },
+            {
               "name": "Text/Default",
               "type": "color",
               "isAlias": true,
@@ -929,6 +938,15 @@
               "value": {
                 "collection": "Global Colors",
                 "name": "Neutral/80"
+              }
+            },
+            {
+              "name": "Icon/Inverse",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "System/White"
               }
             },
             {
