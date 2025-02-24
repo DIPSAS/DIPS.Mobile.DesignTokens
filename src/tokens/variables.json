@@ -869,7 +869,7 @@
               }
             },
             {
-              "name": "Text/Inverse",
+              "name": "Text/On action",
               "type": "color",
               "isAlias": true,
               "value": {
@@ -941,7 +941,7 @@
               }
             },
             {
-              "name": "Icon/Inverse",
+              "name": "Icon/On action",
               "type": "color",
               "isAlias": true,
               "value": {
