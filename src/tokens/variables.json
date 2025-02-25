@@ -887,6 +887,15 @@
               }
             },
             {
+              "name": "Text/Placeholder",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Neutral/60"
+              }
+            },
+            {
               "name": "Stroke/Default",
               "type": "color",
               "isAlias": true,
