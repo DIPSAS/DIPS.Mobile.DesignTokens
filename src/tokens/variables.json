@@ -45,6 +45,15 @@
               }
             },
             {
+              "name": "Radius/XLarge",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 8"
+              }
+            },
+            {
               "name": "Content Margin/Xsmall",
               "type": "number",
               "isAlias": true,
@@ -77,7 +86,7 @@
               "isAlias": true,
               "value": {
                 "collection": "Sizes",
-                "name": "Global/Size 4"
+                "name": "Global/Size 5"
               }
             },
             {
@@ -811,7 +820,7 @@
               "isAlias": true,
               "value": {
                 "collection": "Global Colors",
-                "name": "Secondary/20"
+                "name": "Secondary/30"
               }
             },
             {
