@@ -81,6 +81,15 @@
               }
             },
             {
+              "name": "Content Margin/XLarge",
+              "type": "number",
+              "isAlias": true,
+              "value": {
+                "collection": "Sizes",
+                "name": "Global/Size 7"
+              }
+            },
+            {
               "name": "Page Margin/XSmall",
               "type": "number",
               "isAlias": true,
