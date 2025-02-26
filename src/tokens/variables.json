@@ -914,12 +914,12 @@
               }
             },
             {
-              "name": "Stroke/Subtle",
+              "name": "Stroke/Enhanced",
               "type": "color",
               "isAlias": true,
               "value": {
                 "collection": "Global Colors",
-                "name": "Neutral/30"
+                "name": "Neutral/40"
               }
             },
             {
@@ -929,6 +929,15 @@
               "value": {
                 "collection": "Global Colors",
                 "name": "Secondary/90"
+              }
+            },
+            {
+              "name": "Stroke/Active",
+              "type": "color",
+              "isAlias": true,
+              "value": {
+                "collection": "Global Colors",
+                "name": "Primary/90"
               }
             },
             {
